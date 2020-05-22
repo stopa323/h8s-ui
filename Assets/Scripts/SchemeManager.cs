@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SchemeManager : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject nodePrefab;
+
+    [Header("Automoton Icons reference")]
+    [SerializeField] private Sprite terraformIcon;
 
     private bool isSpawningNode = false;
     private RectTransform canvasRt;
@@ -34,6 +38,10 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
     {
         spawningNode = Instantiate(nodePrefab, transform);
         spawningNodeRt = spawningNode.GetComponent<RectTransform>();
+
+        var node = spawningNode.GetComponent<Node>();
+        node.TurnGhost();
+
         isSpawningNode = true;
     }
 
@@ -47,6 +55,8 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
 
     private void SpawnNode()
     {
+        InitializeNode();
+
         spawningNode = null;
         spawningNodeRt = null;
         isSpawningNode = false;
@@ -59,5 +69,15 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
             Input.mousePosition.y + yOffset), canvasRt);
 
         spawningNodeRt.anchoredPosition = new_position;
+    }
+
+    private void InitializeNode()
+    {
+        var node = spawningNode.GetComponent<Node>();
+        node.TurnSpawned();
+        
+        // This values should be set based on received schema from API
+        node.SetAutomotonIcon(terraformIcon);
+        node.SetName("Create VPC");
     }
 }
