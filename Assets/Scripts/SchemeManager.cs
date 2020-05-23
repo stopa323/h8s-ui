@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using h8s.definitions;
+using h8s.objects;
 
 public class SchemeManager : MonoBehaviour, IPointerClickHandler
 {
@@ -8,6 +10,7 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
 
     [Header("Automoton Icons reference")]
     [SerializeField] private Sprite terraformIcon;
+    [SerializeField] private Sprite ansibleIcon;
 
     private bool isSpawningNode = false;
     private RectTransform canvasRt;
@@ -75,9 +78,15 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
     {
         var node = spawningNode.GetComponent<Node>();
         node.TurnSpawned();
-        
+
         // This values should be set based on received schema from API
-        node.SetAutomotonIcon(terraformIcon);
+        var i = Random.Range(0, 1f);
+        var icon = i > 0.5f ? terraformIcon : ansibleIcon;
+        node.SetAutomotonIcon(icon);
         node.SetName("Create VPC");
+
+        node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.Exec, "In");
+        node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Exec, "Out");
+        node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Bool, "Success");
     }
 }
