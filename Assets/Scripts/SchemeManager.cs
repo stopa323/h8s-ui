@@ -12,40 +12,42 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Sprite terraformIcon;
     [SerializeField] private Sprite ansibleIcon;
 
-    private bool isSpawningNode = false;
+    public static Canvas GUICanvas;
+
     private RectTransform canvasRt;
 
-    private GameObject spawningNode;
+    private Node spawningNode;
+    private NodeType spawningNodeType;
     private RectTransform spawningNodeRt;
 
     private void Awake()
     {
         canvasRt = GetComponent<RectTransform>();
+        GUICanvas = GetComponent<Canvas>();
     }
 
     private void Update()
     {
-        if (!isSpawningNode) return;
+        if (!spawningNode) return;
 
         UpdateNodePosition(-30f, 30f);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!isSpawningNode) return;
+        if (!spawningNode) return;
 
         if (PointerEventData.InputButton.Left == eventData.button) SpawnNode(); else DiscartNode();
     }
 
-    public void StartNodeSpawning()
+    public void StartNodeSpawning(int nodeType)
     {
-        spawningNode = Instantiate(nodePrefab, transform);
-        spawningNodeRt = spawningNode.GetComponent<RectTransform>();
+        var go = Instantiate(nodePrefab, transform) as GameObject;
+        spawningNode = go.GetComponent<Node>();
+        spawningNodeRt = go.GetComponent<RectTransform>();
 
-        var node = spawningNode.GetComponent<Node>();
-        node.TurnGhost();
-
-        isSpawningNode = true;
+        spawningNode.TurnGhost();
+        spawningNodeType = (NodeType)nodeType;
     }
 
     private void DiscartNode()
@@ -53,7 +55,6 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
         Destroy(spawningNode);
         spawningNode = null;
         spawningNodeRt = null;
-        isSpawningNode = false;
     }
 
     private void SpawnNode()
@@ -62,7 +63,6 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
 
         spawningNode = null;
         spawningNodeRt = null;
-        isSpawningNode = false;
     }
 
     private void UpdateNodePosition(float xOffset = 0, float yOffset = 0)
@@ -83,10 +83,32 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
         var i = Random.Range(0, 1f);
         var icon = i > 0.5f ? terraformIcon : ansibleIcon;
         node.SetAutomotonIcon(icon);
-        node.SetName("Create VPC");
 
-        node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.Exec, "In");
-        node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Exec, "Out");
-        node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Bool, "Success");
+        switch (spawningNodeType)
+        {
+            case NodeType.CreateVPC:
+                node.SetName("Create VPC");
+
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.Exec, "In");
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.String, "Name");
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.String, "CIDR");
+
+                node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Exec, "Out");
+                node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Object, "VPC");
+                break;
+
+            case NodeType.CreateSubnet:
+                node.SetName("Create Subnet");
+
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.Exec, "In");
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.String, "Name");
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.String, "CIDR");
+                node.InstantiatePort(PortConst.Direction.Ingress, PortConst.Type.Object, "VPC");
+
+                node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Exec, "Out");
+                node.InstantiatePort(PortConst.Direction.Egress, PortConst.Type.Object, "Subnet");
+                break;
+        }
+
     }
 }

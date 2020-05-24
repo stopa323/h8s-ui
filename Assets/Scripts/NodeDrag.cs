@@ -2,10 +2,8 @@
 using UnityEngine.EventSystems;
 
 public class NodeDrag : MonoBehaviour, IBeginDragHandler,
-    IEndDragHandler, IDragHandler, IPointerDownHandler
+    IEndDragHandler, IDragHandler
 {
-    [SerializeField] private Canvas guiCanvas;
-
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
@@ -22,16 +20,11 @@ public class NodeDrag : MonoBehaviour, IBeginDragHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / guiCanvas.scaleFactor;
+        rectTransform.anchoredPosition += eventData.delta / SchemeManager.GUICanvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.alpha = 1.0f;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log(name);
     }
 }

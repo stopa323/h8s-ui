@@ -47,29 +47,41 @@ namespace h8s.objects
 
         public void InstantiatePort(PortConst.Direction direction, PortConst.Type type, string name)
         {
-
-            if (PortConst.Direction.Ingress == direction)
+            Port port = null;
+            switch (direction)
             {
-                var portObj = Instantiate(ingressPortPrefab, ingressContainer.transform);
-                var port = portObj.GetComponent<Port>();
-
-                ingressPorts.Add(port);
-
-                port.PortType = type;
-                port.PortName = name;
-            }
-            else
-            {
-                var portObj = Instantiate(egressPortPrefab, egressContainer.transform);
-                var port = portObj.GetComponent<Port>();
-
-                egressPorts.Add(port);
-
-                port.PortType = type;
-                port.PortName = name;
+                case PortConst.Direction.Ingress:
+                    port = InstantiateIngressPort(type, name);
+                    break;
+                case PortConst.Direction.Egress:
+                    port = InstantiateEgressPort(type, name);
+                    break;
             }
 
+            port.PortType = type;
+            port.PortName = name;
+            
             RefreshSize();
+        }
+
+        private Port InstantiateIngressPort(PortConst.Type type, string name)
+        {
+            var portObj = Instantiate(ingressPortPrefab, ingressContainer.transform);
+            var port = portObj.GetComponent<Port>();
+
+            ingressPorts.Add(port);
+
+            return port;
+        }
+
+        private Port InstantiateEgressPort(PortConst.Type type, string name)
+        {
+            var portObj = Instantiate(egressPortPrefab, egressContainer.transform);
+            var port = portObj.GetComponent<Port>();
+
+            egressPorts.Add(port);
+
+            return port;
         }
 
         private void RefreshSize()

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7602156087735909941}
   - component: {fileID: 7602156087735909942}
   - component: {fileID: 2574163482564508087}
+  - component: {fileID: 8213018471663854201}
   m_Layer: 5
   m_Name: NodePrefab
   m_TagString: Untagged
@@ -106,6 +107,18 @@ MonoBehaviour:
     type: 3}
   egressPortPrefab: {fileID: 8184329499662009611, guid: 8e0a39088694cfc4f89616d90a517392,
     type: 3}
+--- !u!114 &8213018471663854201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7602156087735909929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eee87490d3cacf4ebf4e4d52ec3b808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7602156087997838419
 GameObject:
   m_ObjectHideFlags: 0
