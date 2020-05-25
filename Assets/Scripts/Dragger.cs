@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NodeDrag : MonoBehaviour, IBeginDragHandler,
+public class Dragger : MonoBehaviour, IBeginDragHandler,
     IEndDragHandler, IDragHandler
 {
     private RectTransform rectTransform;

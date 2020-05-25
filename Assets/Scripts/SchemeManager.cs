@@ -12,9 +12,8 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Sprite terraformIcon;
     [SerializeField] private Sprite ansibleIcon;
 
-    public static Canvas GUICanvas;
-
-    private RectTransform canvasRt;
+    public static Canvas GUICanvas { get; private set; }
+    public static RectTransform GUICanvasRt { get; private set; }
 
     private Node spawningNode;
     private NodeType spawningNodeType;
@@ -22,12 +21,18 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        canvasRt = GetComponent<RectTransform>();
+        GUICanvasRt = GetComponent<RectTransform>();
         GUICanvas = GetComponent<Canvas>();
     }
 
     private void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            Debug.Log("Mouse Pos:  " + Input.mousePosition);
+            Debug.Log("Canvas Pos: " + Utils.ScreenToCanvasPosition(Input.mousePosition));
+        }
+
         if (!spawningNode) return;
 
         UpdateNodePosition(-30f, 30f);
@@ -52,7 +57,7 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
 
     private void DiscartNode()
     {
-        Destroy(spawningNode);
+        Destroy(spawningNode.gameObject);
         spawningNode = null;
         spawningNodeRt = null;
     }
@@ -69,7 +74,7 @@ public class SchemeManager : MonoBehaviour, IPointerClickHandler
     {
         var new_position = Utils.ScreenToCanvasPosition(
             new Vector2(Input.mousePosition.x + xOffset, 
-            Input.mousePosition.y + yOffset), canvasRt);
+            Input.mousePosition.y + yOffset));
 
         spawningNodeRt.anchoredPosition = new_position;
     }
