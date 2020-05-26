@@ -39,13 +39,9 @@ namespace h8s
             var srcPort = eventData.pointerDrag.GetComponent<Attacher>().ParentPort;
             var dstPort = eventData.pointerEnter.GetComponent<Attacher>().ParentPort;
 
-            Debug.Log(srcPort.Direction != dstPort.Direction);
-            Debug.Log(srcPort.Type == dstPort.Type);
-            Debug.Log(srcPort != dstPort);
-
             if (srcPort.Direction != dstPort.Direction &&
                 srcPort.Type == dstPort.Type &&
-                srcPort != dstPort)
+                srcPort.ParentNode != dstPort.ParentNode) // Restrict connection within same node
             {
                 eventData.pointerDrag.GetComponent<Attacher>().ConfirmEdgeAttachment();
             }
