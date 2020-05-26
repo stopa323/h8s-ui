@@ -2,49 +2,56 @@
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
-[RequireComponent(typeof(UILineRenderer))]
-public class EdgeDrawer : MonoBehaviour
+namespace h8s
 {
-    /* Edge visual stuff handling */
-
-    private UILineRenderer lr;
-
-    private Vector2 startAnchorPosition;
-    private Vector2 endAnchorPosition;
-
-    private void Awake()
+    [RequireComponent(typeof(UILineRenderer))]
+    public class EdgeDrawer : MonoBehaviour
     {
-        lr = GetComponent<UILineRenderer>();
-    }
+        /* Edge visual stuff handling */
 
-    public void Initialize(Vector2 anchor)
-    {
-        startAnchorPosition = anchor;
-        endAnchorPosition = anchor;
-        Repaint();
-    }
+        private UILineRenderer lr;
 
-    public void MoveStartAnchor(Vector2 newPosition)
-    {
-        startAnchorPosition = newPosition;
-        Repaint();
-    }
+        private Vector2 startAnchorPosition;
+        private Vector2 endAnchorPosition;
 
-    public void MoveEndAnchor(Vector2 newPosition)
-    {
-        endAnchorPosition = newPosition;
-        Repaint();
-    }
+        private void Awake()
+        {
+            lr = GetComponent<UILineRenderer>();
+        }
 
-    private void Repaint()
-    {
-        /* Update LineRenderer points position */
-        var points = new List<Vector2>() {
+        public void Initialize(Vector2 anchor, DataType portType)
+        {
+            startAnchorPosition = anchor;
+            endAnchorPosition = anchor;
+
+            lr.color = Utils.GetDataTypeColor(portType);
+
+            Repaint();
+        }
+
+        public void MoveStartAnchor(Vector2 newPosition)
+        {
+            startAnchorPosition = newPosition;
+            Repaint();
+        }
+
+        public void MoveEndAnchor(Vector2 newPosition)
+        {
+            endAnchorPosition = newPosition;
+            Repaint();
+        }
+
+        private void Repaint()
+        {
+            /* Update LineRenderer points position */
+            var points = new List<Vector2>() {
             startAnchorPosition,
             new Vector2(0.5f * (startAnchorPosition.x + endAnchorPosition.x), startAnchorPosition.y),
             new Vector2(0.5f * (startAnchorPosition.x + endAnchorPosition.x), endAnchorPosition.y),
             endAnchorPosition
         };
-        lr.Points = points.ToArray();
+            lr.Points = points.ToArray();
+        }
     }
+
 }

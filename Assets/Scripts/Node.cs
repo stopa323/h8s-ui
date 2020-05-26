@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
-using h8s.definitions;
-using h8s.objects;
 using System.Collections.Generic;
 
-
-namespace h8s.objects
+namespace h8s
 {
     public class Node : MonoBehaviour
     {
@@ -27,6 +23,9 @@ namespace h8s.objects
         private List<Port> ingressPorts = new List<Port>();
         private List<Port> egressPorts = new List<Port>();
 
+        private const float PORT_HEIGHT = 30f;
+        private const float HEADER_HEIGHT = 40f;
+
         private void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
@@ -45,16 +44,16 @@ namespace h8s.objects
 
         }
 
-        public void InstantiatePort(PortConst.Direction direction, PortConst.Type type, string name)
+        public void InstantiatePort(PortDirection direction, DataType type, string name)
         {
             Port port = null;
             switch (direction)
             {
-                case PortConst.Direction.Ingress:
-                    port = InstantiateIngressPort(type, name);
+                case PortDirection.Ingress:
+                    port = InstantiateIngressPort(name);
                     break;
-                case PortConst.Direction.Egress:
-                    port = InstantiateEgressPort(type, name);
+                case PortDirection.Egress:
+                    port = InstantiateEgressPort(name);
                     break;
             }
 
@@ -64,20 +63,22 @@ namespace h8s.objects
             RefreshSize();
         }
 
-        private Port InstantiateIngressPort(PortConst.Type type, string name)
+        private Port InstantiateIngressPort(string name)
         {
             var portObj = Instantiate(ingressPortPrefab, ingressContainer.transform);
             var port = portObj.GetComponent<Port>();
+            port.PortDirection = PortDirection.Ingress;
 
             ingressPorts.Add(port);
 
             return port;
         }
 
-        private Port InstantiateEgressPort(PortConst.Type type, string name)
+        private Port InstantiateEgressPort(string name)
         {
             var portObj = Instantiate(egressPortPrefab, egressContainer.transform);
             var port = portObj.GetComponent<Port>();
+            port.PortDirection = PortDirection.Egress;
 
             egressPorts.Add(port);
 
@@ -87,8 +88,8 @@ namespace h8s.objects
         private void RefreshSize()
         {
             var margin = 10f;
-            var portContainerHeight = Mathf.Max(ingressPorts.Count, egressPorts.Count) * PortConst.HEIGHT;
-            rt.sizeDelta = new Vector2(rt.rect.width, NodeConst.HEADER_HEIGHT + portContainerHeight + margin);
+            var portContainerHeight = Mathf.Max(ingressPorts.Count, egressPorts.Count) * PORT_HEIGHT;
+            rt.sizeDelta = new Vector2(rt.rect.width, HEADER_HEIGHT + portContainerHeight + margin);
         }
     }
 

@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Dragger : MonoBehaviour, IBeginDragHandler,
-    IEndDragHandler, IDragHandler
+namespace h8s
 {
-    private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-
-    private void Awake()
+    public class Dragger : MonoBehaviour, IBeginDragHandler,
+        IEndDragHandler, IDragHandler
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
+        private RectTransform rectTransform;
+        private CanvasGroup canvasGroup;
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        canvasGroup.alpha = .6f;
-    }
+        private void Awake()
+        {
+            rectTransform = GetComponent<RectTransform>();
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        rectTransform.anchoredPosition += eventData.delta / SchemeManager.GUICanvas.scaleFactor;
-    }
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            canvasGroup.alpha = .6f;
+        }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        canvasGroup.alpha = 1.0f;
+        public void OnDrag(PointerEventData eventData)
+        {
+            rectTransform.anchoredPosition += eventData.delta / SchemeManager.GUICanvas.scaleFactor;
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            canvasGroup.alpha = 1.0f;
+        }
     }
 }

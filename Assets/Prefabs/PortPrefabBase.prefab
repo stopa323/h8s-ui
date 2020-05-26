@@ -110,7 +110,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 6
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 8184329499662009612}
   - component: {fileID: 7487974613413620549}
   m_Layer: 5
-  m_Name: EgressPortPrefab
+  m_Name: PortPrefabBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,8 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd5f65a404aaae48a00a3e69f177da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentPort: {fileID: 7487974613413620549}
+  ParentPort: {fileID: 7487974613413620549}
   edgePrefab: {fileID: 9193148521362200298, guid: 4cb2f7e1a53aee84e92d3e83c1b89c78,
-    type: 3}
-  edgeConnectorPrefab: {fileID: 9193148521362200298, guid: 844f9d623b584fe4292ea7113bfa7b07,
     type: 3}

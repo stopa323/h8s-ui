@@ -1,21 +1,25 @@
 ﻿using UnityEngine;
 
-public class Edge : MonoBehaviour
+namespace h8s
 {
-    private EdgeDrawer drawer;
-
-    private void Awake()
+    public class Edge : MonoBehaviour
     {
-        drawer = GetComponent<EdgeDrawer>();
+        private EdgeDrawer drawer;
+
+        private void Awake()
+        {
+            drawer = GetComponent<EdgeDrawer>();
+        }
+
+        public void Initialize(Vector2 initPosition, DataType portType)
+        {
+            drawer.Initialize(initPosition, portType);
+        }
+
+        public void MoveEndAnchor(Vector2 newPosition)
+        {
+            drawer.MoveEndAnchor(newPosition);
+        }
     }
 
-    public void Initialize(Vector2 initPosition)
-    {
-        drawer.Initialize(initPosition);
-    }
-
-    public void MoveEndAnchor(Vector2 newPosition)
-    {
-        drawer.MoveEndAnchor(newPosition);
-    }
 }
