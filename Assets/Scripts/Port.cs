@@ -9,6 +9,7 @@ namespace h8s
         [SerializeField] private TMPro.TextMeshProUGUI nameField;
 
         public Node ParentNode { get; private set; }
+        public Edge ConnectedEdge { get; private set; }
         public string Name { get { return nameField.text; } private set { nameField.text = value; } }
         public PortDirection Direction { get; private set; }
         public DataType Type { get; private set; }
@@ -28,6 +29,17 @@ namespace h8s
             Name = name;
 
             isInitialized = true;
+        }
+
+        public void Bind(Edge edge)
+        {
+            if (ConnectedEdge)
+            {
+                // Notify SchemeManager about this destroy
+                Destroy(ConnectedEdge.gameObject);
+            }
+
+            ConnectedEdge = edge;
         }
     }
 }
