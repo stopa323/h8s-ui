@@ -8,18 +8,26 @@ namespace h8s
         [SerializeField] private Image iconField;
         [SerializeField] private TMPro.TextMeshProUGUI nameField;
 
-        private Node node;
-        private DataType _port_type;
+        public Node ParentNode { get; private set; }
+        public string Name { get { return nameField.text; } private set { nameField.text = value; } }
+        public PortDirection Direction { get; private set; }
+        public DataType Type { get; private set; }
 
-        public string PortName { get { return nameField.text; } set { nameField.text = value; } }
-        public PortDirection PortDirection { get; set; }
+        private bool isInitialized = false;
 
-        public DataType PortType {
-            get { return _port_type; }
-            set {
-                _port_type = value;
-                iconField.color = Utils.GetDataTypeColor(value);
-            }
+        public void Initialize(Node parent, PortDirection direction, DataType type, string name)
+        {
+            if (isInitialized) throw new UnityException(string.Format(
+                "Attempt to initialize already initialized Port: {0}@{1}", 
+                Name, ParentNode.name));
+
+            ParentNode = parent;
+            Direction = direction;
+            Type = type;
+            iconField.color = Utils.GetDataTypeColor(type);
+            Name = name;
+
+            isInitialized = true;
         }
     }
 }

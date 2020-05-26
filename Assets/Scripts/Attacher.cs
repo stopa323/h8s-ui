@@ -23,7 +23,7 @@ namespace h8s
             var edge = Instantiate(edgePrefab, SchemeManager.GUICanvas.transform);
             drawingEdge = edge.GetComponent<Edge>();
             drawingEdge.Initialize(Utils.ScreenToCanvasPosition(eventData.pressPosition),
-                ParentPort.PortType);
+                ParentPort.Type);
 
             // Discard by default, it is changed in case certain contitions are met
             discardAttachment = true;
@@ -39,12 +39,12 @@ namespace h8s
             var srcPort = eventData.pointerDrag.GetComponent<Attacher>().ParentPort;
             var dstPort = eventData.pointerEnter.GetComponent<Attacher>().ParentPort;
 
-            Debug.Log(srcPort.PortDirection != dstPort.PortDirection);
-            Debug.Log(srcPort.PortType == dstPort.PortType);
+            Debug.Log(srcPort.Direction != dstPort.Direction);
+            Debug.Log(srcPort.Type == dstPort.Type);
             Debug.Log(srcPort != dstPort);
 
-            if (srcPort.PortDirection != dstPort.PortDirection &&
-                srcPort.PortType == dstPort.PortType &&
+            if (srcPort.Direction != dstPort.Direction &&
+                srcPort.Type == dstPort.Type &&
                 srcPort != dstPort)
             {
                 eventData.pointerDrag.GetComponent<Attacher>().ConfirmEdgeAttachment();

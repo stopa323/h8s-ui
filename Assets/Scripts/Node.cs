@@ -50,36 +50,30 @@ namespace h8s
             switch (direction)
             {
                 case PortDirection.Ingress:
-                    port = InstantiateIngressPort(name);
+                    port = InstantiateIngressPort();
                     break;
                 case PortDirection.Egress:
-                    port = InstantiateEgressPort(name);
+                    port = InstantiateEgressPort();
                     break;
             }
+            port.Initialize(this, direction, type, name);
 
-            port.PortType = type;
-            port.PortName = name;
-            
             RefreshSize();
         }
 
-        private Port InstantiateIngressPort(string name)
+        private Port InstantiateIngressPort()
         {
             var portObj = Instantiate(ingressPortPrefab, ingressContainer.transform);
             var port = portObj.GetComponent<Port>();
-            port.PortDirection = PortDirection.Ingress;
-
             ingressPorts.Add(port);
 
             return port;
         }
 
-        private Port InstantiateEgressPort(string name)
+        private Port InstantiateEgressPort()
         {
             var portObj = Instantiate(egressPortPrefab, egressContainer.transform);
             var port = portObj.GetComponent<Port>();
-            port.PortDirection = PortDirection.Egress;
-
             egressPorts.Add(port);
 
             return port;
