@@ -34,5 +34,4 @@ namespace h8s
             drawer.MoveEndAnchor(newPosition);
         }
     }
-
 }

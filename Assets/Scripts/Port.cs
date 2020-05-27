@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace h8s
 { 
-    public class Port : MonoBehaviour
+    public class Port : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Image iconField;
         [SerializeField] private TMPro.TextMeshProUGUI nameField;
@@ -33,13 +34,25 @@ namespace h8s
 
         public void Bind(Edge edge)
         {
+            Unbind();
+            ConnectedEdge = edge;
+        }
+
+        public void Unbind()
+        {
             if (ConnectedEdge)
             {
                 // Notify SchemeManager about this destroy
                 Destroy(ConnectedEdge.gameObject);
             }
+        }
 
-            ConnectedEdge = edge;
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (PointerEventData.InputButton.Right == eventData.button)
+            {
+                Unbind();
+            }
         }
     }
 }
