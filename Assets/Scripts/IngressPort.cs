@@ -10,5 +10,17 @@ namespace h8s
         {
             inputField.gameObject.SetActive(false);
         }
+
+        public void Initialize(Node parent, PortDirection direction, DataType type, string name, string id,
+            bool hasValue, string value)
+        {
+            Initialize(parent, direction, type, name, id);
+
+            if (hasValue)
+            {
+                inputField.gameObject.SetActive(true);
+                inputField.text = value;
+            }
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace h8s.api
         public string id;
         public string name;
         public string type;
+        public bool hasValue;
+        public string value;
 
         public DataType GetType()
         {

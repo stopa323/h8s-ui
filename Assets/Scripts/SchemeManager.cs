@@ -67,7 +67,7 @@ namespace h8s
             StartCoroutine(api.Client.Instance.LoadNodes());
         }
 
-        public void SpawnNode(api.Node nodeDefinition)
+        public void InstantiateNode(api.Node nodeDefinition)
         {
             var node_obj = Instantiate(nodePrefab, transform) as GameObject;
             var node = node_obj.GetComponent<Node>();
@@ -80,20 +80,12 @@ namespace h8s
 
             foreach(var port in nodeDefinition.ingressPorts)
             {
-                node.InstantiatePort(
-                    PortDirection.Ingress, 
-                    port.GetType(), 
-                    port.name,
-                    port.id);
+                node.InstantiatePort(PortDirection.Ingress, port);
             }
 
             foreach (var port in nodeDefinition.egressPorts)
             {
-                node.InstantiatePort(
-                    PortDirection.Egress,
-                    port.GetType(),
-                    port.name,
-                    port.id);
+                node.InstantiatePort(PortDirection.Egress, port);
             }
         }
 

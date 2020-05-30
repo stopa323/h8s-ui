@@ -40,7 +40,7 @@ namespace h8s.api
 
                     foreach (var node in nodeContainer.nodes)
                     {
-                        SchemeManager.Instance.SpawnNode(node);
+                        SchemeManager.Instance.InstantiateNode(node);
                     }
                 }
             }
