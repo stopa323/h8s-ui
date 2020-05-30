@@ -1,15 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
 namespace h8s
 {
     public class SchemeManager : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private GameObject nodePrefab;
+        public static SchemeManager Instance { get; private set; }
 
-        [Header("Automoton Icons reference")]
-        [SerializeField] private Sprite terraformIcon;
-        [SerializeField] private Sprite ansibleIcon;
+        [SerializeField] private GameObject nodePrefab;
 
         public static Canvas GUICanvas { get; private set; }
         public static RectTransform GUICanvasRt { get; private set; }
@@ -20,6 +26,15 @@ namespace h8s
 
         private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+
             GUICanvasRt = GetComponent<RectTransform>();
             GUICanvas = GetComponent<Canvas>();
         }
@@ -35,17 +50,17 @@ namespace h8s
         {
             if (!spawningNode) return;
 
-            if (PointerEventData.InputButton.Left == eventData.button) SpawnNode(); else DiscartNode();
+            //if (PointerEventData.InputButton.Left == eventData.button) SpawnNode(); else DiscartNode();
         }
 
         public void StartNodeSpawning(int nodeType)
         {
-            var go = Instantiate(nodePrefab, transform) as GameObject;
-            spawningNode = go.GetComponent<Node>();
-            spawningNodeRt = go.GetComponent<RectTransform>();
+            //var go = Instantiate(nodePrefab, transform) as GameObject;
+            //spawningNode = go.GetComponent<Node>();
+            //spawningNodeRt = go.GetComponent<RectTransform>();
 
-            spawningNode.TurnGhost();
-            spawningNodeType = (NodeKind)nodeType;
+            //spawningNode.TurnGhost();
+            //spawningNodeType = (NodeKind)nodeType;
         }
 
         private void DiscartNode()
@@ -55,12 +70,39 @@ namespace h8s
             spawningNodeRt = null;
         }
 
-        private void SpawnNode()
+        public void LoadNodesAsync()
         {
-            InitializeNode();
+            StartCoroutine(api.Client.Instance.LoadNodes());
+        }
 
-            spawningNode = null;
-            spawningNodeRt = null;
+        public void SpawnNode(api.Node nodeDefinition)
+        {
+            var node_obj = Instantiate(nodePrefab, transform) as GameObject;
+            var node = node_obj.GetComponent<Node>();
+
+            node.Initialize(
+                nodeDefinition.id, 
+                nodeDefinition.name, 
+                nodeDefinition.GetAutomoton(), 
+                nodeDefinition.GetPosition());
+
+            foreach(var port in nodeDefinition.ingressPorts)
+            {
+                node.InstantiatePort(
+                    PortDirection.Ingress, 
+                    port.GetType(), 
+                    port.name,
+                    port.id);
+            }
+
+            foreach (var port in nodeDefinition.egressPorts)
+            {
+                node.InstantiatePort(
+                    PortDirection.Egress,
+                    port.GetType(),
+                    port.name,
+                    port.id);
+            }
         }
 
         private void UpdateNodePosition(float xOffset = 0, float yOffset = 0)
@@ -70,43 +112,6 @@ namespace h8s
                 Input.mousePosition.y + yOffset));
 
             spawningNodeRt.anchoredPosition = new_position;
-        }
-
-        private void InitializeNode()
-        {
-            var node = spawningNode.GetComponent<Node>();
-            node.TurnSpawned();
-
-            // This values should be set based on received schema from API
-            var i = Random.Range(0, 1f);
-            var icon = i > 0.5f ? terraformIcon : ansibleIcon;
-            node.SetAutomotonIcon(icon);
-
-            switch (spawningNodeType)
-            {
-                case NodeKind.CreateVPC:
-                    node.SetName("Create VPC");
-
-                    node.InstantiatePort(PortDirection.Ingress, DataType.Exec, "In");
-                    node.InstantiatePort(PortDirection.Ingress, DataType.String, "Name");
-                    node.InstantiatePort(PortDirection.Ingress, DataType.String, "CIDR");
-
-                    node.InstantiatePort(PortDirection.Egress, DataType.Exec, "Out");
-                    node.InstantiatePort(PortDirection.Egress, DataType.Object, "VPC");
-                    break;
-
-                case NodeKind.CreateSubnet:
-                    node.SetName("Create Subnet");
-
-                    node.InstantiatePort(PortDirection.Ingress, DataType.Exec, "In");
-                    node.InstantiatePort(PortDirection.Ingress, DataType.String, "Name");
-                    node.InstantiatePort(PortDirection.Ingress, DataType.String, "CIDR");
-                    node.InstantiatePort(PortDirection.Ingress, DataType.Object, "VPC");
-
-                    node.InstantiatePort(PortDirection.Egress, DataType.Exec, "Out");
-                    node.InstantiatePort(PortDirection.Egress, DataType.Object, "Subnet");
-                    break;
-            }
         }
     }
 }

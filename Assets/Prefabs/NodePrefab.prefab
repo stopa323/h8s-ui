@@ -100,13 +100,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   automotonIcon: {fileID: 7602156088383531550}
-  name: {fileID: 7602156088908354050}
+  nameField: {fileID: 7602156088908354050}
   ingressContainer: {fileID: 7602156087997838419}
   egressContainer: {fileID: 7602156088044649420}
   ingressPortPrefab: {fileID: 5009109652438998424, guid: fa2bda869d5929241ae83dc019fbf1fe,
     type: 3}
   egressPortPrefab: {fileID: 5060022735840969959, guid: 2483b2c694c94214d80617b1cab8e9ac,
     type: 3}
+  terraformIcon: {fileID: 21300000, guid: b7fea20655d8d4643a8b6a002bf2add6, type: 3}
+  ansibleIcon: {fileID: 21300000, guid: 8d168791f84f507429002c082382f396, type: 3}
 --- !u!114 &-6906821848337098684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,10 +370,10 @@ RectTransform:
   m_Father: {fileID: 7602156087735909930}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -122.15}
-  m_SizeDelta: {x: 300, y: 164.3}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7602156088458400978
 CanvasRenderer:
@@ -695,10 +697,10 @@ RectTransform:
   m_Father: {fileID: 7602156087735909930}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -20}
-  m_SizeDelta: {x: 300, y: 40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7602156089179746155
 CanvasRenderer:

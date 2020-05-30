@@ -8,7 +8,7 @@ namespace h8s
     {
         [Header("GUI Elements reference")]
         [SerializeField] private Image automotonIcon;
-        [SerializeField] private TMPro.TextMeshProUGUI name;
+        [SerializeField] private TMPro.TextMeshProUGUI nameField;
 
         [SerializeField] private GameObject ingressContainer;
         [SerializeField] private GameObject egressContainer;
@@ -16,6 +16,14 @@ namespace h8s
         [Header("Prefabs")]
         [SerializeField] private GameObject ingressPortPrefab;
         [SerializeField] private GameObject egressPortPrefab;
+
+        [Header("Available Automoton Icons")]
+        [SerializeField] private Sprite terraformIcon;
+        [SerializeField] private Sprite ansibleIcon;
+
+        public string Id { get; private set; }
+        public string Name { get { return nameField.text; } set { nameField.text = value; } }
+        public NodeAutomoton Automoton { get; private set; }
 
         private CanvasGroup canvasGroup;
         private RectTransform rt;
@@ -32,19 +40,22 @@ namespace h8s
             rt = GetComponent<RectTransform>();
         }
 
+        public void Initialize(string id, string name, NodeAutomoton automoton, Vector2 position)
+        {
+            Id = id;
+            this.name = id;
+            Name = name;
+            Automoton = automoton;
+            automotonIcon.sprite = GetAutomotonIcon(automoton);
+
+            rt.anchoredPosition = position;
+        }
+
         public void TurnGhost() { canvasGroup.alpha = 0.6f; }
 
         public void TurnSpawned() { canvasGroup.alpha = 1.0f; }
 
-        public void SetAutomotonIcon(Sprite image) { automotonIcon.sprite = image; }
-
-        public void SetName(string newName)
-        {
-            name.text = newName;
-
-        }
-
-        public void InstantiatePort(PortDirection direction, DataType type, string name)
+        public void InstantiatePort(PortDirection direction, DataType type, string name, string id)
         {
             Port port = null;
             switch (direction)
@@ -56,7 +67,7 @@ namespace h8s
                     port = InstantiateEgressPort();
                     break;
             }
-            port.Initialize(this, direction, type, name);
+            port.Initialize(this, direction, type, name, id);
 
             RefreshSize();
         }
@@ -84,6 +95,19 @@ namespace h8s
             var margin = 10f;
             var portContainerHeight = Mathf.Max(ingressPorts.Count, egressPorts.Count) * PORT_HEIGHT;
             rt.sizeDelta = new Vector2(rt.rect.width, HEADER_HEIGHT + portContainerHeight + margin);
+        }
+
+        private Sprite GetAutomotonIcon(NodeAutomoton automoton)
+        {
+            switch (automoton)
+            {
+                case NodeAutomoton.Ansible:
+                    return ansibleIcon;
+                case NodeAutomoton.Terraform:
+                    return terraformIcon;
+                default:
+                    return terraformIcon;
+            }
         }
     }
 
