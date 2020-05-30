@@ -1315,8 +1315,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 7602156087735909929, guid: 6ef0b209cd454454c882b1cab23bc475,
     type: 3}
-  terraformIcon: {fileID: 21300000, guid: b7fea20655d8d4643a8b6a002bf2add6, type: 3}
-  ansibleIcon: {fileID: 21300000, guid: 8d168791f84f507429002c082382f396, type: 3}
 --- !u!1 &1753191963
 GameObject:
   m_ObjectHideFlags: 0

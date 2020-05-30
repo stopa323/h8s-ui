@@ -29,6 +29,19 @@ namespace h8s
             // Notify SchemeManager about new edge
         }
 
+        private void OnDestroy()
+        {
+            if (SourcePort)
+            {
+                SourcePort.Unbind();
+            }
+
+            if (DestinationPort)
+            {
+                DestinationPort.Unbind();
+            }
+        }
+
         public void MoveEndAnchor(Vector2 newPosition)
         {
             drawer.MoveEndAnchor(newPosition);

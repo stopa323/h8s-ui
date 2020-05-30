@@ -22,6 +22,8 @@ namespace h8s
             DrawingEdge.Initialize(Utils.ScreenToCanvasPosition(eventData.pressPosition),
                 ParentPort.Type);
 
+            ParentPort.FillIcon();
+
             // Discard by default, it is changed in case certain contitions are met
             discardEdge = true;
         }
@@ -52,7 +54,13 @@ namespace h8s
             }
         }
 
-        public void OnEndDrag(PointerEventData eventData) { if (discardEdge) { Destroy(DrawingEdge.gameObject); } }
+        public void OnEndDrag(PointerEventData eventData) {
+            if (discardEdge)
+            {
+                Destroy(DrawingEdge.gameObject);
+                ParentPort.EmptyIcon();
+            }
+        }
 
         /* Tell source that destination Attacher will handle connection */ 
         public void SupressEdgeDiscard() { discardEdge = false; }

@@ -9,6 +9,10 @@ namespace h8s
         [SerializeField] private Image iconField;
         [SerializeField] private TMPro.TextMeshProUGUI nameField;
 
+        [Header("Icon References")]
+        [SerializeField] private Sprite portEmptyIcon;
+        [SerializeField] private Sprite portFilledIcon;
+
         public string Id { get; private set; }
         public string Name { get { return nameField.text; } private set { nameField.text = value; } }
         public PortDirection Direction { get; private set; }
@@ -17,6 +21,11 @@ namespace h8s
         public Edge ConnectedEdge { get; private set; }
         
         private bool isInitialized = false;
+
+        private void Awake()
+        {
+            iconField.sprite = portEmptyIcon;
+        }
 
         public void Initialize(Node parent, PortDirection direction, DataType type, string name, string id)
         {
@@ -35,26 +44,36 @@ namespace h8s
             isInitialized = true;
         }
 
+        public void FillIcon()
+        {
+            iconField.sprite = portFilledIcon;
+        }
+
+        public void EmptyIcon()
+        {
+            iconField.sprite = portEmptyIcon;
+        }
+
         public void Bind(Edge edge)
         {
-            Unbind();
+            if (ConnectedEdge)
+            {
+                Destroy(ConnectedEdge.gameObject);
+            }
             ConnectedEdge = edge;
+            FillIcon();
         }
 
         public void Unbind()
         {
-            if (ConnectedEdge)
-            {
-                // Notify SchemeManager about this destroy
-                Destroy(ConnectedEdge.gameObject);
-            }
+            EmptyIcon();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (PointerEventData.InputButton.Right == eventData.button)
+            if (PointerEventData.InputButton.Right == eventData.button && ConnectedEdge)
             {
-                Unbind();
+                Destroy(ConnectedEdge.gameObject);
             }
         }
     }
