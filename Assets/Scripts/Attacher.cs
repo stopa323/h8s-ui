@@ -6,7 +6,7 @@ namespace h8s
     public class Attacher : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
         IDropHandler
     {
-        [SerializeField] public Port ParentPort;
+        [SerializeField] public PortBase ParentPort;
 
         [SerializeField] private GameObject edgePrefab;            
 

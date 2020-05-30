@@ -4,8 +4,8 @@ namespace h8s
 {
     public class Edge : MonoBehaviour
     {
-        public Port SourcePort { get; private set; }
-        public Port DestinationPort { get; private set; }
+        public PortBase SourcePort { get; private set; }
+        public PortBase DestinationPort { get; private set; }
 
         private EdgeDrawer drawer;
 
@@ -19,7 +19,7 @@ namespace h8s
             drawer.Initialize(initPosition, dataType);
         }
 
-        public void Bind(Port srcPort, Port dstPort)
+        public void Bind(PortBase srcPort, PortBase dstPort)
         {
             SourcePort = srcPort;
             DestinationPort = dstPort;

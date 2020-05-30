@@ -28,8 +28,8 @@ namespace h8s
         private CanvasGroup canvasGroup;
         private RectTransform rt;
 
-        private List<Port> ingressPorts = new List<Port>();
-        private List<Port> egressPorts = new List<Port>();
+        private List<PortBase> ingressPorts = new List<PortBase>();
+        private List<PortBase> egressPorts = new List<PortBase>();
 
         private const float PORT_HEIGHT = 30f;
         private const float HEADER_HEIGHT = 40f;
@@ -57,7 +57,7 @@ namespace h8s
 
         public void InstantiatePort(PortDirection direction, DataType type, string name, string id)
         {
-            Port port = null;
+            PortBase port = null;
             switch (direction)
             {
                 case PortDirection.Ingress:
@@ -72,19 +72,19 @@ namespace h8s
             RefreshSize();
         }
 
-        private Port InstantiateIngressPort()
+        private PortBase InstantiateIngressPort()
         {
             var portObj = Instantiate(ingressPortPrefab, ingressContainer.transform);
-            var port = portObj.GetComponent<Port>();
+            var port = portObj.GetComponent<PortBase>();
             ingressPorts.Add(port);
 
             return port;
         }
 
-        private Port InstantiateEgressPort()
+        private PortBase InstantiateEgressPort()
         {
             var portObj = Instantiate(egressPortPrefab, egressContainer.transform);
-            var port = portObj.GetComponent<Port>();
+            var port = portObj.GetComponent<PortBase>();
             egressPorts.Add(port);
 
             return port;

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace h8s
 { 
-    public class Port : MonoBehaviour, IPointerClickHandler
+    public class PortBase : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Image iconField;
         [SerializeField] private TMPro.TextMeshProUGUI nameField;

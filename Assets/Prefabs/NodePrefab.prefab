@@ -103,9 +103,9 @@ MonoBehaviour:
   nameField: {fileID: 7602156088908354050}
   ingressContainer: {fileID: 7602156087997838419}
   egressContainer: {fileID: 7602156088044649420}
-  ingressPortPrefab: {fileID: 5009109652438998424, guid: fa2bda869d5929241ae83dc019fbf1fe,
+  ingressPortPrefab: {fileID: 8184329499662009611, guid: f84971bf67c264546a0e9e3832b0c63f,
     type: 3}
-  egressPortPrefab: {fileID: 5060022735840969959, guid: 2483b2c694c94214d80617b1cab8e9ac,
+  egressPortPrefab: {fileID: 8184329499662009611, guid: 1f37810530dc2df4cb71ff16eea84ca4,
     type: 3}
   terraformIcon: {fileID: 21300000, guid: b7fea20655d8d4643a8b6a002bf2add6, type: 3}
   ansibleIcon: {fileID: 21300000, guid: 8d168791f84f507429002c082382f396, type: 3}
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09803922, g: 0.16470589, b: 0.3372549, a: 0.5882353}
+  m_Color: {r: 0.20784314, g: 0.23137255, b: 0.28235295, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09803922, g: 0.16470589, b: 0.3372549, a: 0.78431374}
+  m_Color: {r: 0, g: 0.65882355, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
