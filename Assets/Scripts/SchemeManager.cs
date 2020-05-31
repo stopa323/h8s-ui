@@ -10,7 +10,7 @@ namespace h8s
         public static SchemeManager Instance { get; private set; }
 
         [SerializeField] private GameObject nodePrefab;
-        [SerializeField] private GameObject quickSearchPanelPrefab;
+        [SerializeField] private QuickSearchManager quickSearch;
 
         public static Canvas GUICanvas { get; private set; }
         public static RectTransform GUICanvasRt { get; private set; }
@@ -18,8 +18,6 @@ namespace h8s
         private Node spawningNode;
         private NodeKind spawningNodeType;
         private RectTransform spawningNodeRt;
-
-        private QuickSearchManager quickSearch;
 
         private BlackboadFocus blackboadFocus = BlackboadFocus.Sheet;
 
@@ -130,24 +128,15 @@ namespace h8s
 
         private void ToggleOnQuickSearch(Vector2 position)
         {
-            ToggleOffQuickSearch();
-
-            var obj = Instantiate(quickSearchPanelPrefab, transform);
-
-            var rt = obj.GetComponent<RectTransform>();
+            quickSearch.gameObject.SetActive(true);
+            var rt = quickSearch.gameObject.GetComponent<RectTransform>();
             rt.anchoredPosition = position;
-
-            quickSearch = obj.GetComponent<QuickSearchManager>();
-
             blackboadFocus = BlackboadFocus.QuickSearch;
         }
 
         private void ToggleOffQuickSearch()
         {
-            if (quickSearch)
-            {
-                Destroy(quickSearch.gameObject);
-            }
+            quickSearch.gameObject.SetActive(false);
             blackboadFocus = BlackboadFocus.Sheet;
         }
     }
