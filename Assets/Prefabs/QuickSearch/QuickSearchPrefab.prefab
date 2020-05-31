@@ -700,6 +700,9 @@ GameObject:
   - component: {fileID: 8678310232124730405}
   - component: {fileID: 403828795998289184}
   - component: {fileID: 8489766950724387023}
+  - component: {fileID: 8366512495203572207}
+  - component: {fileID: 5865512522321370302}
+  - component: {fileID: 6840810342076659938}
   m_Layer: 5
   m_Name: QuickSearchPrefab
   m_TagString: Untagged
@@ -751,7 +754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.18431373, g: 0.21176471, b: 0.2509804, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -792,6 +795,42 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &8366512495203572207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229003508151913342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6379ba7951214f4c9380a020037a960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5865512522321370302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229003508151913342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eee87490d3cacf4ebf4e4d52ec3b808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &6840810342076659938
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229003508151913342}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6386076136480652414
 GameObject:
   m_ObjectHideFlags: 0

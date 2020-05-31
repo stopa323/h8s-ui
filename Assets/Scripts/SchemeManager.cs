@@ -3,11 +3,14 @@ using UnityEngine.EventSystems;
 
 namespace h8s
 {
+    public enum BlackboadFocus { Sheet, QuickSearch }
+
     public class SchemeManager : MonoBehaviour, IPointerClickHandler
     {
         public static SchemeManager Instance { get; private set; }
 
         [SerializeField] private GameObject nodePrefab;
+        [SerializeField] private GameObject quickSearchPanelPrefab;
 
         public static Canvas GUICanvas { get; private set; }
         public static RectTransform GUICanvasRt { get; private set; }
@@ -15,6 +18,10 @@ namespace h8s
         private Node spawningNode;
         private NodeKind spawningNodeType;
         private RectTransform spawningNodeRt;
+
+        private QuickSearchManager quickSearch;
+
+        private BlackboadFocus blackboadFocus = BlackboadFocus.Sheet;
 
         private void Awake()
         {
@@ -40,8 +47,31 @@ namespace h8s
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!spawningNode) return;
-
+            switch(eventData.button)
+            {
+                case PointerEventData.InputButton.Right:
+                    switch (blackboadFocus)
+                    {
+                        case BlackboadFocus.QuickSearch:
+                        case BlackboadFocus.Sheet:
+                            ToggleOnQuickSearch(
+                                Utils.ScreenToCanvasPosition(eventData.pressPosition));
+                            break;
+                    }
+                    break;
+                case PointerEventData.InputButton.Left:
+                    switch (blackboadFocus)
+                    {
+                        case BlackboadFocus.QuickSearch:
+                            ToggleOffQuickSearch();
+                            break;
+                    }
+                    break;
+                case PointerEventData.InputButton.Middle:
+                    break;
+                default:
+                    break;
+            }
             //if (PointerEventData.InputButton.Left == eventData.button) SpawnNode(); else DiscartNode();
         }
 
@@ -96,6 +126,29 @@ namespace h8s
                 Input.mousePosition.y + yOffset));
 
             spawningNodeRt.anchoredPosition = new_position;
+        }
+
+        private void ToggleOnQuickSearch(Vector2 position)
+        {
+            ToggleOffQuickSearch();
+
+            var obj = Instantiate(quickSearchPanelPrefab, transform);
+
+            var rt = obj.GetComponent<RectTransform>();
+            rt.anchoredPosition = position;
+
+            quickSearch = obj.GetComponent<QuickSearchManager>();
+
+            blackboadFocus = BlackboadFocus.QuickSearch;
+        }
+
+        private void ToggleOffQuickSearch()
+        {
+            if (quickSearch)
+            {
+                Destroy(quickSearch.gameObject);
+            }
+            blackboadFocus = BlackboadFocus.Sheet;
         }
     }
 }
