@@ -8,5 +8,6 @@ public class Listing : MonoBehaviour
     public void SetName(string name)
     {
         textField.text = name;
+
     }
 }
