@@ -1,30 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace h8s
 {
     public class QuickSearchManager : MonoBehaviour
     {
+        public static QuickSearchManager Instance { get; private set; }
+
         [SerializeField] private GameObject categoryPrefab;
         [SerializeField] private Transform categoryContainer;
 
+        private Dictionary<NodeAutomoton, CategoryManager> nodeTemplates = new Dictionary<NodeAutomoton, CategoryManager>();
+
         private void Awake()
         {
-            // Start coroutine here
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
 
-            InstantiateCategory("Ansible");
-            InstantiateCategory("System");
-            InstantiateCategory("Terraform");
+            StartCoroutine(api.Client.Instance.FetchNodeDefinitions());
         }
 
-        private void InstantiateCategory(string name)
+        public void AddNodeTemplate(api.NodeTemplate node)
         {
-            var obj = Instantiate(categoryPrefab, categoryContainer);
-            var category = obj.GetComponent<CategoryManager>();
+            var automoton = node.GetAutomoton();
 
-            category.SetName(name);
-            category.AddListing("Node Type 1");
-            category.AddListing("Node Type 2");
-            category.AddListing("Node Type 3");
+            /* If autmoton is new, spawn category */
+            if (!nodeTemplates.ContainsKey(node.GetAutomoton()))
+            {
+                var obj = Instantiate(categoryPrefab, categoryContainer);
+                var cm = obj.GetComponent<CategoryManager>();
+                cm.SetName(automoton.ToString());
+                nodeTemplates.Add(automoton, cm);
+            }
+
+            var categoryManager = nodeTemplates[automoton];
+            categoryManager.AddListing(node.name);
         }
     }
 

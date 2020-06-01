@@ -45,5 +45,30 @@ namespace h8s.api
                 }
             }
         }
+
+        public IEnumerator FetchNodeDefinitions()
+        {
+            string url = "http://my-json-server.typicode.com/stopa323/h8s-fake-api/definitions";
+
+
+            using (UnityWebRequest www = UnityWebRequest.Get(url))
+            {
+                yield return www.SendWebRequest();
+                if (www.isNetworkError)
+                {
+                    Debug.LogError(www.error);
+                }
+                else if (www.isDone)
+                {
+                    string jsonResult = Encoding.UTF8.GetString(www.downloadHandler.data);
+                    NodeTemplateContainer template = JsonUtility.FromJson<NodeTemplateContainer>(jsonResult);
+
+                    foreach (var nodeTemplate in template.nodes)
+                    {
+                        QuickSearchManager.Instance.AddNodeTemplate(nodeTemplate);
+                    }
+                }
+            }
+        }
     }
 }

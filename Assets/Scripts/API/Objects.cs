@@ -74,4 +74,36 @@ namespace h8s.api
     {
         public List<Node> nodes;
     }
+
+    [Serializable]
+    public class NodeTemplate
+    {
+        public string kind;
+        public string name;
+        public string description;
+        public string automoton;
+        public List<string> keywords;
+
+        public NodeAutomoton GetAutomoton()
+        {
+            switch (automoton)
+            {
+                case "ANSIBLE":
+                    return NodeAutomoton.Ansible;
+                case "_CORE":
+                    return NodeAutomoton._Core;
+                case "TERRAFORM":
+                    return NodeAutomoton.Terraform;
+                default:
+                    Debug.LogWarningFormat("Unknown automoton received: {0}", automoton);
+                    return NodeAutomoton._Core;
+            }
+        }
+    }
+
+    [Serializable]
+    public class NodeTemplateContainer
+    {
+        public List<NodeTemplate> nodes;
+    }
 }
