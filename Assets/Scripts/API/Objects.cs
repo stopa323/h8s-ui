@@ -78,6 +78,7 @@ namespace h8s.api
     [Serializable]
     public class NodeTemplate
     {
+        public string id;
         public string kind;
         public string name;
         public string description;

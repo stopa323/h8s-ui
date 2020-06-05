@@ -21,9 +21,7 @@ namespace h8s
         [SerializeField] private Sprite terraformIcon;
         [SerializeField] private Sprite ansibleIcon;
 
-        public string Id { get; private set; }
-        public string Name { get { return nameField.text; } set { nameField.text = value; } }
-        public NodeAutomoton Automoton { get; private set; }
+        private api.NodeTemplate tmpl;
 
         private CanvasGroup canvasGroup;
         private RectTransform rt;
@@ -40,13 +38,15 @@ namespace h8s
             rt = GetComponent<RectTransform>();
         }
 
-        public void Initialize(string id, string name, NodeAutomoton automoton, Vector2 position)
+        public void Initialize(api.NodeTemplate tmpl, Vector2 position)
         {
-            Id = id;
-            this.name = id;
-            Name = name;
-            Automoton = automoton;
-            automotonIcon.sprite = GetAutomotonIcon(automoton);
+            this.tmpl = tmpl;
+            this.tmpl.id = "Some_ID";
+            name = this.tmpl.id;
+
+            nameField.text = tmpl.name;
+
+            automotonIcon.sprite = GetAutomotonIcon(tmpl.GetAutomoton());
 
             rt.anchoredPosition = position;
         }

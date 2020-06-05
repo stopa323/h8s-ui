@@ -40,7 +40,7 @@ namespace h8s
             }
 
             var categoryManager = nodeTemplates[automoton];
-            categoryManager.AddListing(node.name);
+            categoryManager.AddListing(node);
         }
     }
 

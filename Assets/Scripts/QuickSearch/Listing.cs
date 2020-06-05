@@ -1,13 +1,23 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class Listing : MonoBehaviour
+namespace h8s
 {
-    [SerializeField] private TextMeshProUGUI textField;
-
-    public void SetName(string name)
+    public class Listing : MonoBehaviour
     {
-        textField.text = name;
+        [SerializeField] private TextMeshProUGUI textField;
 
+        private api.NodeTemplate nodeTemplate;
+
+        public void Initialize(api.NodeTemplate nodeTemplate)
+        {
+            textField.text = nodeTemplate.name;
+            this.nodeTemplate = nodeTemplate;
+        }
+
+        public void SpawnNode()
+        {
+            H8SEvents.Instance.NodeSpawnBegin.Invoke(nodeTemplate);
+        }
     }
 }

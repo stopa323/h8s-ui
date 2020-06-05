@@ -15,10 +15,6 @@ namespace h8s
         public static Canvas GUICanvas { get; private set; }
         public static RectTransform GUICanvasRt { get; private set; }
 
-        private Node spawningNode;
-        private NodeKind spawningNodeType;
-        private RectTransform spawningNodeRt;
-
         private BlackboadFocus blackboadFocus = BlackboadFocus.Sheet;
 
         private void Awake()
@@ -36,11 +32,15 @@ namespace h8s
             GUICanvas = GetComponent<Canvas>();
         }
 
-        private void Update()
+        private void Start()
         {
-            if (!spawningNode) return;
+            H8SEvents.Instance.NodeSpawnBegin.AddListener(E_OnNodeSpawnBegin);
+        }
 
-            UpdateNodePosition(-30f, 30f);
+        public void E_OnNodeSpawnBegin(api.NodeTemplate tmpl)
+        {
+            ToggleOffQuickSearch();
+            InstantiateNode(tmpl);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -70,24 +70,6 @@ namespace h8s
                 default:
                     break;
             }
-            //if (PointerEventData.InputButton.Left == eventData.button) SpawnNode(); else DiscartNode();
-        }
-
-        public void StartNodeSpawning(int nodeType)
-        {
-            //var go = Instantiate(nodePrefab, transform) as GameObject;
-            //spawningNode = go.GetComponent<Node>();
-            //spawningNodeRt = go.GetComponent<RectTransform>();
-
-            //spawningNode.TurnGhost();
-            //spawningNodeType = (NodeKind)nodeType;
-        }
-
-        private void DiscartNode()
-        {
-            Destroy(spawningNode.gameObject);
-            spawningNode = null;
-            spawningNodeRt = null;
         }
 
         public void LoadNodesAsync()
@@ -95,35 +77,24 @@ namespace h8s
             StartCoroutine(api.Client.Instance.LoadNodes());
         }
 
-        public void InstantiateNode(api.Node nodeDefinition)
+        public Node InstantiateNode(api.NodeTemplate nodeDefinition)
         {
             var node_obj = Instantiate(nodePrefab, transform) as GameObject;
             var node = node_obj.GetComponent<Node>();
 
-            node.Initialize(
-                nodeDefinition.id, 
-                nodeDefinition.name, 
-                nodeDefinition.GetAutomoton(), 
-                nodeDefinition.GetPosition());
+            node.Initialize(nodeDefinition, 
+                Utils.ScreenToCanvasPosition(Input.mousePosition));
 
-            foreach(var port in nodeDefinition.ingressPorts)
-            {
-                node.InstantiatePort(PortDirection.Ingress, port);
-            }
+            //foreach(var port in nodeDefinition.ingressPorts)
+            //{
+            //    node.InstantiatePort(PortDirection.Ingress, port);
+            //}
 
-            foreach (var port in nodeDefinition.egressPorts)
-            {
-                node.InstantiatePort(PortDirection.Egress, port);
-            }
-        }
-
-        private void UpdateNodePosition(float xOffset = 0, float yOffset = 0)
-        {
-            var new_position = Utils.ScreenToCanvasPosition(
-                new Vector2(Input.mousePosition.x + xOffset,
-                Input.mousePosition.y + yOffset));
-
-            spawningNodeRt.anchoredPosition = new_position;
+            //foreach (var port in nodeDefinition.egressPorts)
+            //{
+            //    node.InstantiatePort(PortDirection.Egress, port);
+            //}
+            return node;
         }
 
         private void ToggleOnQuickSearch(Vector2 position)
