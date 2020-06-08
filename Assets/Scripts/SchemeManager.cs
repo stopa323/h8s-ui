@@ -72,11 +72,6 @@ namespace h8s
             }
         }
 
-        public void LoadNodesAsync()
-        {
-            StartCoroutine(api.Client.Instance.LoadNodes());
-        }
-
         public Node InstantiateNode(api.NodeTemplate nodeDefinition)
         {
             var node_obj = Instantiate(nodePrefab, transform) as GameObject;

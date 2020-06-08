@@ -21,31 +21,7 @@ namespace h8s.api
             }
         }
 
-        public IEnumerator LoadNodes()
-        {
-            string url = "http://my-json-server.typicode.com/stopa323/h8s-fake-api/nodes";
-
-
-            using (UnityWebRequest www = UnityWebRequest.Get(url))
-            {
-                yield return www.SendWebRequest();
-                if (www.isNetworkError)
-                {
-                    Debug.LogError(www.error);
-                }
-                else if (www.isDone)
-                {
-                    string jsonResult = Encoding.UTF8.GetString(www.downloadHandler.data);
-                    NodeContainer nodeContainer = JsonUtility.FromJson<NodeContainer>(jsonResult);
-
-                    foreach (var node in nodeContainer.nodes)
-                    {
-                        //SchemeManager.Instance.InstantiateNode(node);
-                    }
-                }
-            }
-        }
-
+ 
         public IEnumerator FetchNodeDefinitions()
         {
             string url = "http://my-json-server.typicode.com/stopa323/h8s-fake-api/definitions";
