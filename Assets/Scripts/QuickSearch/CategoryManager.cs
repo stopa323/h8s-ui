@@ -28,5 +28,24 @@ namespace h8s
             btn1Name.text = name;
             btn2Name.text = name;
         }
+
+        public int SetListingKeywordFilter(string keyword)
+        {
+            var valid_listings_num = 0;
+            foreach(var listing in listings)
+            {
+                var factor = listing.GetKeyworkMatchFactor(keyword);
+                if (0 == factor)
+                {
+                    listing.gameObject.SetActive(false);
+                }
+                else
+                {
+                    listing.gameObject.SetActive(true);
+                    valid_listings_num++;
+                }
+            }
+            return valid_listings_num;
+        }
     }
 }

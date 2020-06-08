@@ -42,6 +42,22 @@ namespace h8s
             var categoryManager = nodeTemplates[automoton];
             categoryManager.AddListing(node);
         }
+
+        public void ChangeListingsCriteria(string keyword)
+        {
+            foreach(KeyValuePair<NodeAutomoton, CategoryManager> entry in nodeTemplates)
+            {
+                var valid_listings = entry.Value.SetListingKeywordFilter(keyword);
+                if (0 == valid_listings)
+                {
+                    entry.Value.gameObject.SetActive(false);
+                }
+                else
+                {
+                    entry.Value.gameObject.SetActive(true);
+                }
+            }
+        }
     }
 
 }

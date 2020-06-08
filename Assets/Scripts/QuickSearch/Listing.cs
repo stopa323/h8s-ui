@@ -19,5 +19,14 @@ namespace h8s
         {
             H8SEvents.Instance.NodeSpawnBegin.Invoke(nodeTemplate);
         }
+
+        public int GetKeyworkMatchFactor(string keyword)
+        {
+            if ("" == keyword) return 1;
+
+            if (nodeTemplate.keywords.Contains(keyword)) return 1;
+
+            return 0;
+        }
     }
 }

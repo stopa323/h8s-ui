@@ -700,9 +700,9 @@ GameObject:
   - component: {fileID: 8678310232124730405}
   - component: {fileID: 403828795998289184}
   - component: {fileID: 8489766950724387023}
+  - component: {fileID: 6840810342076659938}
   - component: {fileID: 8366512495203572207}
   - component: {fileID: 5865512522321370302}
-  - component: {fileID: 6840810342076659938}
   m_Layer: 5
   m_Name: QuickSearchPrefab
   m_TagString: Untagged
@@ -795,6 +795,18 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!225 &6840810342076659938
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229003508151913342}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8366512495203572207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,18 +834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eee87490d3cacf4ebf4e4d52ec3b808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!225 &6840810342076659938
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6229003508151913342}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &6386076136480652414
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +970,7 @@ GameObject:
   - component: {fileID: 7844807387909932786}
   - component: {fileID: 2174520889862951334}
   - component: {fileID: 2339937262805041591}
+  - component: {fileID: 4960670528987005065}
   m_Layer: 5
   m_Name: SearchBox
   m_TagString: Untagged
@@ -1124,7 +1125,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4960670528987005065}
+        m_MethodName: OnValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: TMPro.TMP_InputField+OnChangeEvent, Unity.TextMeshPro, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnTouchScreenKeyboardStatusChanged:
@@ -1167,6 +1179,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &4960670528987005065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407918808840914049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5278aa9e0e5d81c429d2ea3a981292a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8278960456509788883
 GameObject:
   m_ObjectHideFlags: 0
