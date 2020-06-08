@@ -13,35 +13,28 @@ namespace h8s
         [SerializeField] private Sprite portEmptyIcon;
         [SerializeField] private Sprite portFilledIcon;
 
-        public string Id { get; private set; }
-        public string Name { get { return nameField.text; } private set { nameField.text = value; } }
+        private api.PortTemplate tmpl;
+
+        public string Id { get; }
+        public string Name { get { return tmpl.name; } }
         public PortDirection Direction { get; private set; }
-        public DataType Type { get; private set; }
+        public DataType Type { get { return tmpl.GetKind(); } }
         public Node ParentNode { get; private set; }
         public Edge ConnectedEdge { get; private set; }
         
-        private bool isInitialized = false;
-
         private void Awake()
         {
             iconField.sprite = portEmptyIcon;
         }
 
-        public void Initialize(Node parent, PortDirection direction, DataType type, string name, string id)
+        public void Initialize(Node parent, PortDirection direction, api.PortTemplate tmpl)
         {
-            if (isInitialized) throw new UnityException(string.Format(
-                "Attempt to initialize already initialized Port: {0}@{1}", 
-                Name, ParentNode.name));
-
             ParentNode = parent;
             Direction = direction;
-            Type = type;
-            iconField.color = Utils.GetDataTypeColor(type);
-            Name = name;
-            Id = id;
-            this.name = id;
+            this.tmpl = tmpl;
 
-            isInitialized = true;
+            iconField.color = Utils.GetDataTypeColor(Type);
+            nameField.text = tmpl.name;
         }
 
         public void FillIcon()

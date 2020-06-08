@@ -85,15 +85,15 @@ namespace h8s
             node.Initialize(nodeDefinition, 
                 Utils.ScreenToCanvasPosition(Input.mousePosition));
 
-            //foreach(var port in nodeDefinition.ingressPorts)
-            //{
-            //    node.InstantiatePort(PortDirection.Ingress, port);
-            //}
+            foreach (var port in nodeDefinition.ingressPorts)
+            {
+                node.InstantiatePort(PortDirection.Ingress, port);
+            }
 
-            //foreach (var port in nodeDefinition.egressPorts)
-            //{
-            //    node.InstantiatePort(PortDirection.Egress, port);
-            //}
+            foreach (var port in nodeDefinition.egressPorts)
+            {
+                node.InstantiatePort(PortDirection.Egress, port);
+            }
             return node;
         }
 

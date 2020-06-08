@@ -55,7 +55,7 @@ namespace h8s
 
         public void TurnSpawned() { canvasGroup.alpha = 1.0f; }
 
-        public void InstantiatePort(PortDirection direction, api.Port portDefinition)
+        public void InstantiatePort(PortDirection direction, api.PortTemplate portTmpl)
         {
             switch (direction)
             {
@@ -63,21 +63,14 @@ namespace h8s
                     var inPort = InstantiateIngressPort();
                     inPort.Initialize(
                         this, 
-                        direction, 
-                        portDefinition.GetType(), 
-                        portDefinition.name, 
-                        portDefinition.id, 
-                        portDefinition.hasValue,
-                        portDefinition.value);
+                        direction,
+                        portTmpl);
                     break;
                 case PortDirection.Egress:
                     var outPort = InstantiateEgressPort();
                     outPort.Initialize(
                         this, 
-                        direction, 
-                        portDefinition.GetType(), 
-                        portDefinition.name, 
-                        portDefinition.id);
+                        direction, portTmpl);
                     break;
             }
             RefreshSize();

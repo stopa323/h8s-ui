@@ -11,15 +11,14 @@ namespace h8s
             inputField.gameObject.SetActive(false);
         }
 
-        public void Initialize(Node parent, PortDirection direction, DataType type, string name, string id,
-            bool hasValue, string value)
+        public void Initialize(Node parent, PortDirection direction, api.PortTemplate tmpl)
         {
-            Initialize(parent, direction, type, name, id);
+            base.Initialize(parent, direction, tmpl);
 
-            if (hasValue)
+            if (tmpl.defaultValue != null)
             {
                 inputField.gameObject.SetActive(true);
-                inputField.text = value;
+                inputField.text = tmpl.defaultValue;
             }
         }
     }
