@@ -20,6 +20,7 @@ namespace h8s
         [Header("Available Automoton Icons")]
         [SerializeField] private Sprite terraformIcon;
         [SerializeField] private Sprite ansibleIcon;
+        [SerializeField] private Sprite coreIcon;
 
         private api.NodeTemplate tmpl;
 
@@ -110,7 +111,7 @@ namespace h8s
                 case NodeAutomoton.Terraform:
                     return terraformIcon;
                 default:
-                    return terraformIcon;
+                    return coreIcon;
             }
         }
     }
