@@ -29,15 +29,21 @@ namespace h8s
             Repaint();
         }
 
-        public void MoveStartAnchor(Vector2 newPosition)
-        {
-            startAnchorPosition = newPosition;
-            Repaint();
-        }
-
         public void MoveEndAnchor(Vector2 newPosition)
         {
             endAnchorPosition = newPosition;
+            Repaint();
+        }
+
+        public void ShiftStartAnchor(Vector2 shift)
+        {
+            startAnchorPosition += shift;
+            Repaint();
+        }
+
+        public void ShiftEndAnchor(Vector2 shift)
+        {
+            endAnchorPosition += shift;
             Repaint();
         }
 

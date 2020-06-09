@@ -69,5 +69,12 @@ namespace h8s
                 Destroy(ConnectedEdge.gameObject);
             }
         }
+
+        public void OnParentMove(Vector2 shift)
+        {
+            if (null == ConnectedEdge) { return; }
+
+            ConnectedEdge.OnPortMoved(this, shift);
+        }
     }
 }

@@ -3,16 +3,18 @@ using UnityEngine.EventSystems;
 
 namespace h8s
 {
-    public class Dragger : MonoBehaviour, IBeginDragHandler,
+    public class NodeDragger : MonoBehaviour, IBeginDragHandler,
         IEndDragHandler, IDragHandler
     {
         private RectTransform rectTransform;
         private CanvasGroup canvasGroup;
+        private Node parentNode;
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
             canvasGroup = GetComponent<CanvasGroup>();
+            parentNode = GetComponent<Node>();
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -23,6 +25,7 @@ namespace h8s
         public void OnDrag(PointerEventData eventData)
         {
             rectTransform.anchoredPosition += eventData.delta / SchemeManager.GUICanvas.scaleFactor;
+            parentNode.OnNodeMove(eventData.delta / SchemeManager.GUICanvas.scaleFactor);
         }
 
         public void OnEndDrag(PointerEventData eventData)

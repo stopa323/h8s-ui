@@ -46,5 +46,11 @@ namespace h8s
         {
             drawer.MoveEndAnchor(newPosition);
         }
+
+        public void OnPortMoved(PortBase port, Vector2 shift)
+        {
+            if (port == SourcePort) { drawer.ShiftStartAnchor(shift); }
+            else { drawer.ShiftEndAnchor(shift); }
+        }
     }
 }

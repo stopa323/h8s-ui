@@ -114,6 +114,18 @@ namespace h8s
                     return coreIcon;
             }
         }
+
+        public void OnNodeMove(Vector2 shift)
+        {
+            foreach(var p in ingressPorts)
+            {
+                p.OnParentMove(shift);
+            }
+            foreach (var p in egressPorts)
+            {
+                p.OnParentMove(shift);
+            }
+        }
     }
 
 }
