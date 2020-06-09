@@ -126,6 +126,11 @@ namespace h8s
                 p.OnParentMove(shift);
             }
         }
+
+        public void DestroyNode()
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

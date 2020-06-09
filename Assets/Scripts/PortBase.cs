@@ -76,5 +76,10 @@ namespace h8s
 
             ConnectedEdge.OnPortMoved(this, shift);
         }
+
+        private void OnDestroy()
+        {
+            if (ConnectedEdge) { Destroy(ConnectedEdge.gameObject); }
+        }
     }
 }
