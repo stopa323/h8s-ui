@@ -24,7 +24,7 @@ namespace h8s.api
  
         public IEnumerator FetchNodeDefinitions()
         {
-            string url = "http://my-json-server.typicode.com/stopa323/h8s-fake-api/definitions";
+            string url = "https://my-json-server.typicode.com/stopa323/h8s-fake-api/definitions";
 
 
             using (UnityWebRequest www = UnityWebRequest.Get(url))
