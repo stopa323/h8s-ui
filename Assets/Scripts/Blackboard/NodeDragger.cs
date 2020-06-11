@@ -24,8 +24,8 @@ namespace h8s
 
         public void OnDrag(PointerEventData eventData)
         {
-            rectTransform.anchoredPosition += eventData.delta / SchemeManager.GUICanvas.scaleFactor;
-            parentNode.OnNodeMove(eventData.delta / SchemeManager.GUICanvas.scaleFactor);
+            rectTransform.anchoredPosition += eventData.delta / BlackboardManager.GUICanvas.scaleFactor;
+            parentNode.OnNodeMove(eventData.delta / BlackboardManager.GUICanvas.scaleFactor);
         }
 
         public void OnEndDrag(PointerEventData eventData)

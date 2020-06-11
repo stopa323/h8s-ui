@@ -5,9 +5,9 @@ namespace h8s
 {
     public enum BlackboadFocus { Sheet, QuickSearch }
 
-    public class SchemeManager : MonoBehaviour, IPointerClickHandler
+    public class BlackboardManager : MonoBehaviour, IPointerClickHandler
     {
-        public static SchemeManager Instance { get; private set; }
+        public static BlackboardManager Instance { get; private set; }
 
         [SerializeField] private GameObject nodePrefab;
         [SerializeField] private QuickSearchManager quickSearch;
@@ -34,14 +34,17 @@ namespace h8s
 
         private void Start()
         {
-            H8SEvents.Instance.NodeSpawnBegin.AddListener(E_OnNodeSpawnBegin);
+            H8SEvents.Instance.E_NodeSpawned.AddListener(OnNodeSpawned);
         }
 
-        public void E_OnNodeSpawnBegin(api.NodeTemplate tmpl)
+        #region Event handlers
+        /* Handle creating node from QuickSearch */
+        public void OnNodeSpawned(api.NodeTemplate template)
         {
             ToggleOffQuickSearch();
-            InstantiateNode(tmpl);
+            CreateNodeFromTemplate(template);
         }
+        #endregion
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -72,24 +75,15 @@ namespace h8s
             }
         }
 
-        public Node InstantiateNode(api.NodeTemplate nodeDefinition)
+        /* Creates new Node element from selected template */
+        public void CreateNodeFromTemplate(api.NodeTemplate template)
         {
             var node_obj = Instantiate(nodePrefab, transform) as GameObject;
             var node = node_obj.GetComponent<Node>();
 
-            node.Initialize(nodeDefinition, 
+            node.InitializeFromTemplate(
+                template, 
                 Utils.ScreenToCanvasPosition(Input.mousePosition));
-
-            foreach (var port in nodeDefinition.ingressPorts)
-            {
-                node.InstantiatePort(PortDirection.Ingress, port);
-            }
-
-            foreach (var port in nodeDefinition.egressPorts)
-            {
-                node.InstantiatePort(PortDirection.Egress, port);
-            }
-            return node;
         }
 
         private void ToggleOnQuickSearch(Vector2 position)

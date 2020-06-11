@@ -10,7 +10,7 @@ namespace h8s
     {
         public static H8SEvents Instance { get; private set; }
 
-        public NodeTemplateEvent NodeSpawnBegin = new NodeTemplateEvent();
+        public NodeTemplateEvent E_NodeSpawned = new NodeTemplateEvent();
 
         private void Awake()
         {

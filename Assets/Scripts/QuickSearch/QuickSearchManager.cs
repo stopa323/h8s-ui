@@ -28,10 +28,10 @@ namespace h8s
 
         public void AddNodeTemplate(api.NodeTemplate node)
         {
-            var automoton = node.GetAutomoton();
+            var automoton = Utils.AutomotonFromString(node.automoton);
 
             /* If autmoton is new, spawn category */
-            if (!nodeTemplates.ContainsKey(node.GetAutomoton()))
+            if (!nodeTemplates.ContainsKey(automoton))
             {
                 var obj = Instantiate(categoryPrefab, categoryContainer);
                 var cm = obj.GetComponent<CategoryManager>();

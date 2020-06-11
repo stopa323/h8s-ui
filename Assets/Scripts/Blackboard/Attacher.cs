@@ -6,7 +6,7 @@ namespace h8s
     public class Attacher : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
         IDropHandler
     {
-        [SerializeField] public PortBase ParentPort;
+        [SerializeField] public Port ParentPort;
 
         [SerializeField] private GameObject edgePrefab;            
 
@@ -17,7 +17,7 @@ namespace h8s
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            var edge = Instantiate(edgePrefab, SchemeManager.GUICanvas.transform);
+            var edge = Instantiate(edgePrefab, BlackboardManager.GUICanvas.transform);
             DrawingEdge = edge.GetComponent<Edge>();
             DrawingEdge.Initialize(Utils.ScreenToCanvasPosition(eventData.pressPosition),
                 ParentPort.Type);

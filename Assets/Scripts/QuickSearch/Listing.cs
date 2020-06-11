@@ -17,7 +17,7 @@ namespace h8s
 
         public void SpawnNode()
         {
-            H8SEvents.Instance.NodeSpawnBegin.Invoke(nodeTemplate);
+            H8SEvents.Instance.E_NodeSpawned.Invoke(nodeTemplate);
         }
 
         public int GetKeyworkMatchFactor(string keyword)

@@ -7,11 +7,11 @@ namespace h8s
         public static Vector2 ScreenToCanvasPosition(Vector2 screenPos)
         {
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                SchemeManager.GUICanvasRt, screenPos, null, out Vector2 localCursor))
+                BlackboardManager.GUICanvasRt, screenPos, null, out Vector2 localCursor))
                 return Vector2.zero;
 
-            var xpos = localCursor.x + SchemeManager.GUICanvasRt.rect.width / 2;
-            var ypos = localCursor.y - SchemeManager.GUICanvasRt.rect.height / 2;
+            var xpos = localCursor.x + BlackboardManager.GUICanvasRt.rect.width / 2;
+            var ypos = localCursor.y - BlackboardManager.GUICanvasRt.rect.height / 2;
 
             return new Vector2(xpos, ypos);
         }
@@ -32,6 +32,38 @@ namespace h8s
                     return new Color32(0, 168, 255, 255);
                 default:
                     return defaultColor;
+            }
+        }
+
+        public static NodeAutomoton AutomotonFromString(string automoton)
+        {
+            switch (automoton)
+            {
+                case "ANSIBLE":
+                    return NodeAutomoton.Ansible;
+                case "_CORE":
+                    return NodeAutomoton._Core;
+                case "TERRAFORM":
+                    return NodeAutomoton.Terraform;
+                default:
+                    throw new UnityException(string.Format("Unknown automoton received: {0}", automoton));
+            }
+        }
+
+        public static DataType DataTypeFromString(string dataType)
+        {
+            switch (dataType)
+            {
+                case "EXEC":
+                    return DataType.Exec;
+                case "OBJECT":
+                    return DataType.Object;
+                case "STRING":
+                    return DataType.String;
+                case "BOOL":
+                    return DataType.Bool;
+                default:
+                    throw new UnityException(string.Format("Unknown data type received: {0}", dataType));
             }
         }
     }

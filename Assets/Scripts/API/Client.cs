@@ -24,7 +24,7 @@ namespace h8s.api
  
         public IEnumerator FetchNodeDefinitions()
         {
-            string url = "https://my-json-server.typicode.com/stopa323/h8s-fake-api/definitions";
+            string url = "https://my-json-server.typicode.com/stopa323/h8s-fake-api/nodeDefinitions";
 
 
             using (UnityWebRequest www = UnityWebRequest.Get(url))
@@ -39,7 +39,7 @@ namespace h8s.api
                     string jsonResult = Encoding.UTF8.GetString(www.downloadHandler.data);
                     NodeTemplateContainer template = JsonUtility.FromJson<NodeTemplateContainer>(jsonResult);
 
-                    foreach (var nodeTemplate in template.nodes)
+                    foreach (var nodeTemplate in template.items)
                     {
                         QuickSearchManager.Instance.AddNodeTemplate(nodeTemplate);
                     }
